@@ -22,7 +22,7 @@ public class UserController {
     @PostMapping("/login")
     public String login(@RequestBody String userName, String passWord) {
         log.info("login" + userName);
-        if (userService.login(userName, passWord) != true) {
+        if (!userService.login(userName, passWord)) {
             return "Sai tài khoản hoặc mật khẩu";
         }
         return userName + "login";

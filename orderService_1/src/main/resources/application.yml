@@ -1,9 +1,9 @@
-
 spring:
   application:
-    name: USER-SERVICE
+    name: ORDER-SERVICE
+
 server:
-  port: 8521
+  port: 8500
 #eureka:
 #  client:
 #    serviceUrl:
