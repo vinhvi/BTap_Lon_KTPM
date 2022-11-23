@@ -3,9 +3,7 @@ package com.example.orderService.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Data
@@ -18,11 +16,10 @@ public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "order_id")
     private Long orderId;
     private Date invoiceDate;
     private Long userId;
-    @OneToMany(mappedBy = "orderId", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<OrderDetail> orderDetails = new HashSet<>();
+
 
 }

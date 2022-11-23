@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
 
 
 @Service
@@ -25,15 +26,19 @@ public class UserService {
         return userRepo.findUserById(userId);
     }
 
-    public Boolean login(String userName, String passWord) {
-        log.info(userName + "login");
-        List<User> user = userRepo.findAll();
+    public Boolean login(String email, String passWord) {
 
+        List<User> user = userRepo.login(email);
+
+        if (user.isEmpty()){
+            return false;
+        }
         for (User user1 : user) {
-            if (user1.getPassWord() == passWord && user1.getUserName() == userName) {
+            if (user1.getUserName().equals(email) && user1.getPassWord().equals(passWord)) {
+                log.info(email + " login");
                 return true;
             }
         }
-        return false;
+        return true;
     }
 }

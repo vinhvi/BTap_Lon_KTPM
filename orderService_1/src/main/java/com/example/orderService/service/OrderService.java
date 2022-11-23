@@ -19,16 +19,25 @@ public class OrderService {
         log.info("Inside saveUser of UserService");
         return orderRepo.save(order);
     }
+
+    public Order findById(Long id){
+        return orderRepo.findByOrderId(id);
+    }
     @Autowired
     private RestTemplate restTemplate;
 
+//    public User getUserById(Long id){
+//        User user =   restTemplate.getForObject("http://localhost:8521/user/" + id
+//                , User.class);
+//        return user;
+//    }
     public ResponseTemplateUserVO getOrderWithUser(Long orderId) {
         log.info("Inside getUserWithDepartment of UserService");
         ResponseTemplateUserVO vo = new ResponseTemplateUserVO();
         Order order = orderRepo.findByOrderId(orderId);
 
         User user =
-                restTemplate.getForObject("http://USER-SERVICE/user/" + order.getUserId()
+                restTemplate.getForObject("http://localhost:9191/user/" + order.getUserId()
                         , User.class);
 
         vo.setUser(user);

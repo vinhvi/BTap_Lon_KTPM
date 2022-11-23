@@ -2,9 +2,12 @@ package com.example.userService.controller;
 
 import com.example.userService.entity.User;
 import com.example.userService.service.UserService;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 
 @RestController
 @RequestMapping("/user")
@@ -13,6 +16,9 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    JedisPool jedisPool = new JedisPool("127.0.0.1");
+    Jedis jedis = jedisPool.getResource();
+
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {
         log.info("save " + user);
@@ -20,12 +26,12 @@ public class UserController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody String userName, String passWord) {
-        log.info("login" + userName);
-        if (!userService.login(userName, passWord)) {
+    public String login(@RequestBody User user) {
+        if (!userService.login(user.getEmail(), user.getPassWord())){
             return "Sai tài khoản hoặc mật khẩu";
         }
-        return userName + "login";
+
+        return  user.getEmail() + " Login";
     }
 
     @GetMapping("/{id}")
