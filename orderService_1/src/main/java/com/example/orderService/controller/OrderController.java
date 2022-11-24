@@ -20,6 +20,13 @@ import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeoutException;
 
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.TimeoutException;
+
 @RestController
 @RequestMapping("/order")
 @Slf4j
@@ -31,8 +38,12 @@ public class OrderController {
     private final TimeLimiterDemo timeLimiterDemo;
 
 
+<<<<<<< HEAD
     JedisPool jedisPool = new JedisPool("127.0.0.1");
     Jedis jedis = jedisPool.getResource();
+=======
+
+>>>>>>> 0b8917e670225af1e6ebb87cae4d63cb30a00532
     public OrderController(TimeLimiterDemo timeLimiterDemo) {
         this.timeLimiterDemo = timeLimiterDemo;
     }
@@ -56,6 +67,7 @@ public class OrderController {
         return CompletableFuture.supplyAsync(timeLimiterDemo::slowMethod);
     }
 
+<<<<<<< HEAD
     @PostMapping("/addOrderToRedis")
     public String addToCart(@RequestBody Order order){
         jedis.sadd("order", String.valueOf(order.getOrderId()));
@@ -78,6 +90,11 @@ public class OrderController {
         jedis.del("order");
         return "Done";
     }
+=======
+
+
+
+>>>>>>> 0b8917e670225af1e6ebb87cae4d63cb30a00532
 
     @GetMapping("/getOrderWithUser/{id}")
     @Retry(name = "order")
