@@ -16,9 +16,6 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    JedisPool jedisPool = new JedisPool("127.0.0.1");
-    Jedis jedis = jedisPool.getResource();
-
     @PostMapping("/save")
     public User saveUser(@RequestBody User user) {
         log.info("save " + user);
